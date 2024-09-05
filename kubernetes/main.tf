@@ -173,7 +173,7 @@ module "mysql_qa" {
   # resource_group_name     = "test"
   resource_group_name     = azurerm_resource_group.res-4.name
   mysql_server_admin_login    = "dbadmin"
-  mysql_server_admin_password = "d.?;VUa6>zhyb@<4#Y_g5$"  # Password should be securely stored and retrieved
+  mysql_server_admin_password = var.mysql_server_admin_password  # Password should be securely stored and retrieved
   mysql_version           = "8.0.21"
   #
   sku_name                = "B_Standard_B1ms"
