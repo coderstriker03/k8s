@@ -58,8 +58,6 @@ jobs:
       run: terraform plan
       env:
         TF_VAR_mysql_server_admin_login: ${{ secrets.MYSQL_ADMIN_LOGIN_SECRET }}
-
-		
     - name: Terraform Apply (Ingress)
       working-directory: ./ingress  # Ensure the apply is in the ingress project folder
       run: terraform apply -auto-approve
