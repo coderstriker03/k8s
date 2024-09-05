@@ -1,0 +1,17 @@
+controller:
+  replicaCount: 1
+  extraArgs:
+    ingress-class: "ingress-nginx"
+  publishService:
+    enabled: "true"
+  service:
+    annotations:
+      "service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path": "/healthz"
+      "service.beta.kubernetes.io/azure-load-balancer-resource-group": "MC_k8s_k8s-qa-cluster_eastus" 
+      "nginx.ingress.kubernetes.io/proxy-connect-timeout": "1800"
+      "nginx.ingress.kubernetes.io/proxy-read-timeout": "1800"
+      "nginx.ingress.kubernetes.io/proxy-send-timeout": "1800"
+  ingressClassResource:
+    name: "ingress-nginx"
+  watchIngressWithoutClass: "true"
+  

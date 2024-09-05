@@ -1,0 +1,73 @@
+resource "azurerm_kubernetes_cluster" "k8s" {
+  name                = var.name
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  dns_prefix          = var.dns_prefix
+  kubernetes_version  = var.kubernetes_version
+
+  default_node_pool {
+    name                  = var.default_node_pool_name
+    node_count            = var.default_node_count
+    vm_size               = var.default_vm_size
+    os_disk_size_gb       = var.default_os_disk_size_gb
+    os_disk_type          = var.default_os_disk_type
+    kubelet_disk_type     = var.default_kubelet_disk_type
+    max_pods              = var.default_max_pods
+    type                  = var.default_node_type
+    enable_auto_scaling   = var.default_enable_auto_scaling
+    scale_down_mode       = var.default_scale_down_mode
+    orchestrator_version  = var.default_orchestrator_version
+    enable_node_public_ip = var.default_enable_node_public_ip
+    mode                  = var.default_mode
+    os_type               = var.default_os_type
+    os_sku                = var.default_os_sku
+    node_image_version    = var.default_node_image_version
+  }
+
+  agent_pool_profiles {
+    name                  = var.additional_pool_name
+    count                 = var.additional_node_count
+    vm_size               = var.additional_vm_size
+    os_disk_size_gb       = var.additional_os_disk_size_gb
+    os_disk_type          = var.additional_os_disk_type
+    kubelet_disk_type     = var.additional_kubelet_disk_type
+    max_pods              = var.additional_max_pods
+    type                  = var.additional_node_type
+    enable_auto_scaling   = var.additional_enable_auto_scaling
+    scale_down_mode       = var.additional_scale_down_mode
+    orchestrator_version  = var.additional_orchestrator_version
+    enable_node_public_ip = var.additional_enable_node_public_ip
+    mode                  = var.additional_mode
+    os_type               = var.additional_os_type
+    os_sku                = var.additional_os_sku
+    node_image_version    = var.additional_node_image_version
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  network_profile {
+    network_plugin     = var.network_plugin
+    network_policy     = var.network_policy
+    load_balancer_sku  = var.load_balancer_sku
+    service_cidr       = var.service_cidr
+    dns_service_ip     = var.dns_service_ip
+    docker_bridge_cidr = var.docker_bridge_cidr
+    outbound_type      = var.outbound_type
+  }
+
+  addon_profile {
+    oms_agent {
+      enabled                    = true
+      log_analytics_workspace_id = var.log_analytics_workspace_id
+      use_aad_auth               = var.use_aad_auth
+    }
+  }
+
+  rbac {
+    enabled = true
+  }
+
+  tags = var.tags
+}
