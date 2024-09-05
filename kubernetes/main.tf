@@ -1,3 +1,5 @@
+variable "mysql_server_admin_password" {}
+
 ###### vnet creation ####
 # Resource Group for Production
 resource "azurerm_resource_group" "res-0" {
