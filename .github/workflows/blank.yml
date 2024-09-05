@@ -52,11 +52,11 @@ jobs:
 
     - name: Terraform plan (Ingress)
       working-directory: ./ingress  # Navigate to the ingress project folder
-      run: terraform plan -var-file="ingress.tfvars"
+      run: terraform plan -var-file="variables.tfvars"
       env:
         TF_VAR_mysql_server_admin_password: ${{ secrets.MYSQL_SERVER_ADMIN_PASSWORD }}
     - name: Terraform Apply (Ingress)
       working-directory: ./ingress  # Ensure the apply is in the ingress project folder
-      run: terraform apply -var-file="ingress.tfvars" -auto-approve
+      run: terraform apply -var-file="variables.tfvars" -auto-approve
       env:
         TF_VAR_mysql_server_admin_password: ${{ secrets.MYSQL_SERVER_ADMIN_PASSWORD }}
