@@ -40,6 +40,8 @@ jobs:
     - name: Terraform Apply (Kubernetes)
       working-directory: ./kubernetes  # Ensure the apply is in the kubernetes project folder
       run: terraform apply -auto-approve
+      env:
+        TF_VAR_mysql_server_admin_password: ${{ secrets.MYSQL_SERVER_ADMIN_PASSWORD }}
 
     # Apply Terraform in ingress directory
     - name: Terraform Init (Ingress)
