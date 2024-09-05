@@ -1,0 +1,67 @@
+# This is a basic workflow to help you get started with Actions
+
+name: deploy Infra
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  terraform-apply:
+    name: 'Terraform Apply for Kubernetes and Ingress'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    # Apply Terraform in kubernetes directory
+    - name: Terraform Init (Kubernetes)
+      working-directory: ./kubernetes  # Navigate to the kubernetes project folder
+      run: terraform init
+
+    - name: Terraform plan (Kubernetes)
+      working-directory: ./kubernetes  # Navigate to the kubernetes project folder
+      run: terraform plan
+      env:
+        TF_VAR_mysql_server_admin_login: ${{ secrets.MYSQL_ADMIN_LOGIN_SECRET }}
+
+    - name: Terraform Apply (Kubernetes)
+      working-directory: ./kubernetes  # Ensure the apply is in the kubernetes project folder
+      run: terraform apply -auto-approve
+
+    # Apply Terraform in ingress directory
+    - name: Terraform Init (Ingress)
+      working-directory: ./ingress  # Navigate to the ingress project folder
+      run: terraform init
+      env:
+        TF_VAR_mysql_server_admin_login: ${{ secrets.MYSQL_ADMIN_LOGIN_SECRET }}
+
+    - name: Terraform plan (Ingress)
+      working-directory: ./ingress  # Navigate to the ingress project folder
+      run: terraform plan
+      env:
+        TF_VAR_mysql_server_admin_login: ${{ secrets.MYSQL_ADMIN_LOGIN_SECRET }}
+
+		
+    - name: Terraform Apply (Ingress)
+      working-directory: ./ingress  # Ensure the apply is in the ingress project folder
+      run: terraform apply -auto-approve
+      env:
+        TF_VAR_mysql_server_admin_login: ${{ secrets.MYSQL_ADMIN_LOGIN_SECRET }}
