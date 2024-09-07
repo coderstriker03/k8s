@@ -191,10 +191,6 @@ module "mysql_qa" {
   backup_retention_days   = 7
 
   tags = {}
-  # Adding new variables for the database
-  mysql_database_name     = "wordpress"
-  mysql_db_user           = "wordpress"
-  mysql_db_user_password  = "wordpress"
 }
 # create acr Container registery
 resource "azurerm_container_registry" "acr" {

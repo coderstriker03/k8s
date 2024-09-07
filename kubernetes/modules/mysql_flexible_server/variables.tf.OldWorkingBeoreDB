@@ -63,18 +63,3 @@ variable "tags" {
 # variable "delegated_subnet_id" {
 #   description = "the id subnet gived to mysql server"
 # }
-
-variable "mysql_database_name" {
-  description = "Name of the MySQL database"
-  type        = string
-}
-
-variable "mysql_db_user" {
-  description = "MySQL database username"
-  type        = string
-}
-
-variable "mysql_db_user_password" {
-  description = "Password for the MySQL database user"
-  type        = string
-}
