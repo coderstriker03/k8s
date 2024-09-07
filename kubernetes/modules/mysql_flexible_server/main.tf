@@ -25,17 +25,10 @@ resource "azurerm_mysql_flexible_server" "mysql" {
 # Resource to create a MySQL database in the MySQL flexible server
 resource "azurerm_mysql_flexible_database" "database" {
   name                = var.mysql_database_name
-  server_id           = azurerm_mysql_flexible_server.mysql.id
+  server_name         = azurerm_mysql_flexible_server.mysql.name
   resource_group_name = azurerm_mysql_flexible_server.mysql.resource_group_name
   charset             = "utf8"
   collation           = "utf8_general_ci"
 }
 
-# Resource to create a MySQL user for the database
-resource "azurerm_mysql_flexible_server_administrator" "db_user" {
-  server_id           = azurerm_mysql_flexible_server.mysql.id
-  resource_group_name = azurerm_mysql_flexible_server.mysql.resource_group_name
-  login               = var.mysql_db_user
-  password            = var.mysql_db_user_password
-  role                = "db_owner"
-}
+

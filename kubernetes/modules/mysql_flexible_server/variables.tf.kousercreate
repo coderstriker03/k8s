@@ -69,3 +69,12 @@ variable "mysql_database_name" {
   type        = string
 }
 
+variable "mysql_db_user" {
+  description = "MySQL database username"
+  type        = string
+}
+
+variable "mysql_db_user_password" {
+  description = "Password for the MySQL database user"
+  type        = string
+}
