@@ -1,6 +1,7 @@
 name: infra deploy
 on:
   push:
+  workflow_dispatch:
 
 
 jobs:
